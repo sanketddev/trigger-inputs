@@ -3,7 +3,7 @@ name: Triggered Workflow with Various Inputs
 on:
   workflow_dispatch:
     inputs:
-        run-test:
+        run-tests:
             description: "Run Tests?"
             type: boolean
             required: true
@@ -42,5 +42,5 @@ jobs:
 
             # Perform actions based on inputs
             - name: Run tests (if selected)
-              if: ${{ inputs.run-test == 'true' }}
+              if: ${{ inputs.run-tests == 'true' }}
               run: echo "Testing......"
