@@ -1,0 +1,46 @@
+name: Triggered Workflow with Various Inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+        run-test:
+            description: "Run Tests?"
+            type: boolean
+            required: true
+        test-type:
+            description: "Type of test to run"
+            type: choice
+            options:
+              - unit
+              - integration
+              - all
+        environment:
+            description: 'Choose and environment'
+            type: environment
+            required: false
+        build-number:
+            description: "Custom build number"
+            type: number
+            required: false
+        message:
+            description: "Additional message"
+            type: string
+            required: false
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            # Get inputs from workflow dispatch
+            - name: Print workflow inputs
+              run: |
+                echo "Run Tests: ${{ inputs.run-test }}"
+                echo "Test Type: ${{ inputs.test-type }}"
+                echo "Environment: ${{ inputs.environment }}"
+                echo "Build number: ${{ inputs.build-number }}"
+                echo "Message: ${{ inputs.message }}"
+
+            # Perform actions based on inputs
+            - name: Run tests (if selected)
+              if: ${{ inputs.run-test == 'true' }}
+              run: echo "Testing......"
